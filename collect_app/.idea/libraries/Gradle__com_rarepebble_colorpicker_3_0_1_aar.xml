@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.rarepebble:colorpicker:3.0.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f9af5c89eb4f753198849ff4063aa24b/jetified-colorpicker-3.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f9af5c89eb4f753198849ff4063aa24b/jetified-colorpicker-3.0.1/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.rarepebble/colorpicker/3.0.1/c362ea16ca01609fdca756b89d4a2b67ecf15082/colorpicker-3.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.rarepebble/colorpicker/3.0.1/7163d389ec2a315a6af48ebe89f0012bd3d725f4/colorpicker-3.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
