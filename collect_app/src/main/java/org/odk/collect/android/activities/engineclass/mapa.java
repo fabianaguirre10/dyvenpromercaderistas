@@ -103,10 +103,9 @@ public class mapa extends SupportMapFragment implements GoogleMap.OnMarkerClickL
 
 
 
-                    if(cursor.getString(18).equals("cerrado") && objbranch.getFVisibilidad().equals("ok")){
+                    if(cursor.getString(18).equals("cerrado")){
                         Opc.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                    }else if(!cursor.getString(18).equals("cerrado")&& objbranch.getFVisibilidad().equals("ok")&& objbranch.getFDisponibilidad().equals("ok")&& objbranch.getFAccesibilidad().equals("ok")
-                            && objbranch.getFExtra_visibilidad().equals("ok")&& objbranch.getFInventarios().equals("ok")&& objbranch.getFPosicionamiento().equals("ok")){
+                    }else if(!cursor.getString(18).equals("cerrado") && !cursor.getString(10).equals("")){
                         Opc.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                     }
 
@@ -161,7 +160,8 @@ public class mapa extends SupportMapFragment implements GoogleMap.OnMarkerClickL
                 objcodigoSession.setC_estado("");
                 objcodigoSession.setC_uri("");
                 objcodigoSession.setC_imei_id("");
-
+                objBranchSeccion.setE_provincia("");
+                objBranchSeccion.setE_district("");
 
 
                 if (objseleccionado.moveToFirst()) {
@@ -211,6 +211,8 @@ public class mapa extends SupportMapFragment implements GoogleMap.OnMarkerClickL
                         objBranchSeccion.setFInventariosestado(objseleccionado.getString(36));
                         objBranchSeccion.setFPosicionamientoestado(objseleccionado.getString(37));
                         objBranchSeccion.setFacciontipolocal(objseleccionado.getString(38));
+                        objBranchSeccion.setE_provincia(objseleccionado.getString(39));
+                        objBranchSeccion.setE_district(objseleccionado.getString(40));
                         final android.app.AlertDialog.Builder builder;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             builder = new android.app.AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);

@@ -191,11 +191,11 @@ public class Finalizados extends Fragment {
             String where = "where 1=1 ";
 
             if (formabusqueda.toString().trim().equals("C")) {
-                where = "where 1=1 and uriformulario <> '' and FMEDICION='ok' and FPERCHA='ok' and FPOP='ok' and FPROMOCION='ok'  ";
+                where = "where 1=1 and uriformulario <> ''   ";
                 where = where + " and  rutaaggregate ='" + ruta + "' ";
             }
             if (formabusqueda.toString().trim().equals("N")) {
-                where = "where 1=1 and uriformulario <> '' and FMEDICION='ok' and FPERCHA='ok' and FPOP='ok' and FPROMOCION='ok' ";
+                where = "where 1=1 and uriformulario <> ''  ";
                 where = where + " and rutaaggregate ='" + ruta + "' ";
             }
 
@@ -266,7 +266,7 @@ public class Finalizados extends Fragment {
                     opcion = "c";
                     args = new String[]{CodigoLocal.toUpperCase() + "%"};
                     //*********************************************where solo para censo
-                    where = "where 1=1 and uriformulario <> '' and FMEDICION='ok' and FPERCHA='ok' and FPOP='ok' and FPROMOCION='ok' ";
+                    where = "where 1=1 and uriformulario <> ''  ";
                     where = where + " and  rutaaggregate ='" + ruta + "' ";
                     //*********************************************
                     where = where + "and code = '" + CodigoLocal.toUpperCase() + "'";
@@ -275,7 +275,7 @@ public class Finalizados extends Fragment {
                     opcion = "n";
                     args = new String[]{CodigoLocal.toUpperCase() + "%"};
                     //*********************************************where solo para censo
-                    where = "where 1=1 and uriformulario <> '' and FMEDICION='ok' and FPERCHA='ok' and FPOP='ok' and FPROMOCION='ok' ";
+                    where = "where 1=1 and uriformulario <> ''  ";
                     where = where + " and rutaaggregate ='" + ruta + "' ";
                     //*********************************************
                     where = where + "and name like '%" + CodigoLocal.toUpperCase() + "%'";

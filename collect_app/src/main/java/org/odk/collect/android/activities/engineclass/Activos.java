@@ -140,7 +140,8 @@ public class Activos  extends Fragment {
          objBranchSeccion.setE_actividades("");
          objBranchSeccion.setE_EstadoFormulario("");
          //objBranchSeccion.setE_factividades("");
-
+         objBranchSeccion.setE_provincia("");
+         objBranchSeccion.setE_district("");
 
          if (objseleccionado.moveToFirst()) {
              do {
@@ -171,7 +172,7 @@ public class Activos  extends Fragment {
                  objBranchSeccion.setE_comment(objseleccionado.getString(24));
 
                  objBranchSeccion.setE_festadomedicion(objseleccionado.getString(25));
-                 objBranchSeccion.setE_festadopercha(objseleccionado.getString(26));
+                        objBranchSeccion.setE_festadopercha(objseleccionado.getString(26));
                  objBranchSeccion.setE_festadopop(objseleccionado.getString(27));
                  objBranchSeccion.setE_festadopromocion(objseleccionado.getString(28));
                  objBranchSeccion.setE_actividades(objseleccionado.getString(29));
@@ -186,7 +187,8 @@ public class Activos  extends Fragment {
                  objBranchSeccion.setFInventariosestado(objseleccionado.getString(36));
                  objBranchSeccion.setFPosicionamientoestado(objseleccionado.getString(37));
                  objBranchSeccion.setFacciontipolocal(objseleccionado.getString(38));
-
+                 objBranchSeccion.setE_provincia(objseleccionado.getString(39));
+                 objBranchSeccion.setE_district(objseleccionado.getString(40));
 
 
                  Toast.makeText(getActivity(),
@@ -258,14 +260,14 @@ public class Activos  extends Fragment {
         } else {
             String opcion = "";
             String[] args = new String[]{};
-            String where = "where 1=1 ";
+            String where = "where 1=1 and uriformulario = ''";
 
             if (formabusqueda.toString().trim().equals("C")) {
-                where = "where 1=1  ";
+                where = "where 1=1 and uriformulario = ''  ";
                 where = where + " and  rutaaggregate ='" + ruta + "' ";
             }
             if (formabusqueda.toString().trim().equals("N")) {
-                where = "where 1=1 ";
+                where = "where 1=1 and uriformulario = '' ";
                 where = where + " and rutaaggregate ='" + ruta + "' ";
             }
 
@@ -369,13 +371,13 @@ public class Activos  extends Fragment {
             } else {
                 String opcion = "";
                 String[] args = new String[]{};
-                String where = "where 1=1 ";
+                String where = "where 1=1  and uriformulario = ''";
 
                 if (formabusqueda.equalsIgnoreCase("C")) {
                     opcion = "c";
                     args = new String[]{CodigoLocal.toUpperCase() + "%"};
                     //*********************************************where solo para censo
-                    where = "where 1=1  ";
+                    where = "where 1=1 and uriformulario = '' ";
                     where = where + " and  rutaaggregate ='" + ruta + "' ";
                     //*********************************************
                     where = where + "and code = '" + CodigoLocal.toUpperCase() + "'";
@@ -384,7 +386,7 @@ public class Activos  extends Fragment {
                     opcion = "n";
                     args = new String[]{CodigoLocal.toUpperCase() + "%"};
                     //*********************************************where solo para censo
-                    where = "where 1=1  ";
+                    where = "where 1=1 and uriformulario = '' ";
                     where = where + " and rutaaggregate ='" + ruta + "' ";
                     //*********************************************
                     where = where + "and name like '%" + CodigoLocal.toUpperCase() + "%'";

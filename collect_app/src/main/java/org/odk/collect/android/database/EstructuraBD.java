@@ -52,6 +52,8 @@ public class EstructuraBD {
 
         String actividades  ="actividades";
         String Foto_Exterior="Foto_Exterior";
+        String provincia="provincia";
+        String district="district";
 
     }
     public static class CabecerasEngine implements ColumnasEngine {

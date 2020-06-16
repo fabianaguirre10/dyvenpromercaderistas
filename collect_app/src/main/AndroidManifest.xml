@@ -60,7 +60,7 @@
     <application
         android:name=".application.Collect"
         android:allowBackup="true"
-        android:icon="@drawable/iconochariot"
+        android:icon="@drawable/notes2"
         android:installLocation="auto"
         android:label="@string/app_name"
         android:largeHeap="true"

@@ -43,8 +43,24 @@ public class  BranchSession  {
     public static  String e_fpromocion="4. Percha";
     public static  String e_actividades="";
     public static  String e_fotoexterior="e_fotoexterior";
+    public  static  String e_provincia="";
+    public  static  String e_district="";
 
+    public static String getE_provincia() {
+        return e_provincia;
+    }
 
+    public static void setE_provincia(String e_provincia) {
+        BranchSession.e_provincia = e_provincia;
+    }
+
+    public static String getE_district() {
+        return e_district;
+    }
+
+    public static void setE_district(String e_district) {
+        BranchSession.e_district = e_district;
+    }
 
     /*comentar cambio app dyvenpro*/
     public  static  String e_fvisibilidad="1. Visibilidad";

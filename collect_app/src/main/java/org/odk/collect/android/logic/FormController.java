@@ -53,6 +53,7 @@ import org.javarosa.xform.parse.XFormParser;
 import org.javarosa.xpath.XPathParseTool;
 import org.javarosa.xpath.expr.XPathExpression;
 import org.odk.collect.android.database.Entidades.BranchSession;
+import org.odk.collect.android.database.Entidades.SurtiClient;
 import org.odk.collect.android.exception.JavaRosaException;
 import org.odk.collect.android.external.ExternalDataUtil;
 import org.odk.collect.android.formentry.ODKView;
@@ -1374,11 +1375,377 @@ public class FormController {
         /*Store audit*/
 
 
-        TreeElement local = findDepthFirst(trueSubmissionElement, "DL_CO");
-        TreeElement localnuevo = findDepthFirst(trueSubmissionElement, "IMG");
+        /*parametros app surti paso de parametros*/
+        TreeElement localnuevosurti=findDepthFirst(trueSubmissionElement, "UN");
+        BranchSession objBranchSessioot = new BranchSession();
+        SurtiClient surtiClient= new SurtiClient();
+        /*nuevo patrametros surti*/
+        if (localnuevosurti != null) {
+            List<TreeElement> nombre_localnuevo;
+            nombre_localnuevo = localnuevosurti.getChildrenWithName("local_nombre");
+            if (nombre_localnuevo.size() == 1) {
+                StringData sa = (StringData) nombre_localnuevo.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_name().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    if(!sa.getValue().equals(".") && !sa.getValue().equals("")) {
+                        if (sa.getValue().equals(respuesta) && respuesta.getValue() != "")
+                            nombre_localnuevo.get(0).setValue(iAnswerData);
+                    }else{
+                        nombre_localnuevo.get(0).setValue(iAnswerData);
+                    }
+                }
+            }
+
+            List<TreeElement> contacto_localnuevo;
+            contacto_localnuevo = localnuevosurti.getChildrenWithName("name_contacto");
+            if (contacto_localnuevo.size() == 1) {
+                StringData sa = (StringData) contacto_localnuevo.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_propietario().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    if(!sa.getValue().equals(".") && !sa.getValue().equals("")) {
+                        if (sa.getValue().equals(respuesta) && respuesta.getValue() != "")
+                            contacto_localnuevo.get(0).setValue(iAnswerData);
+                    }else{
+                        contacto_localnuevo.get(0).setValue(iAnswerData);
+                    }
+                }
+            }
+            List<TreeElement> calle_principal;
+            calle_principal = localnuevosurti.getChildrenWithName("calle_principal");
+            if (calle_principal.size() == 1) {
+                StringData sa = (StringData) calle_principal.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_mainStreet().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    if(!sa.getValue().equals(".") && !sa.getValue().equals("")) {
+                        if (sa.getValue().equals(respuesta) && respuesta.getValue() != "")
+                            calle_principal.get(0).setValue(iAnswerData);
+                    }else{
+                        calle_principal.get(0).setValue(iAnswerData);
+                    }
+                }
+            }
+            List<TreeElement> numeracion;
+            numeracion = localnuevosurti.getChildrenWithName("numeracion");
+            if (numeracion.size() == 1) {
+                StringData sa = (StringData) numeracion.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_neighborhood().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    // numeracion.get(0).setValue(iAnswerData);
+                }
+            }
+            List<TreeElement> calle_secundaria;
+            calle_secundaria = localnuevosurti.getChildrenWithName("calle_secundaria");
+            if (calle_secundaria.size() == 1) {
+                StringData sa = (StringData) calle_secundaria.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_neighborhood().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    if (!sa.getValue().equals(".") && !sa.getValue().equals("")) {
+                        if (sa.getValue().equals(respuesta) && respuesta.getValue() != "")
+                            calle_secundaria.get(0).setValue(iAnswerData);
+                    } else {
+                        calle_secundaria.get(0).setValue(iAnswerData);
+                    }
+                }
+            }
+            List<TreeElement> referencia;
+            referencia = localnuevosurti.getChildrenWithName("referencia");
+            if (referencia.size() == 1) {
+                StringData sa = (StringData) referencia.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_reference().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    if(!sa.getValue().equals(".") && !sa.getValue().equals("")) {
+                        if (sa.getValue().equals(respuesta) && respuesta.getValue() != "")
+                            referencia.get(0).setValue(iAnswerData);
+                    }else {
+                        referencia.get(0).setValue(iAnswerData);
+                    }
+                }
+            }
+            List<TreeElement> fono;
+            fono = localnuevosurti.getChildrenWithName("fono");
+            if (fono.size() == 1) {
+                StringData sa = (StringData) fono.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_Phone().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    if(!sa.getValue().equals(".") && !sa.getValue().equals("")) {
+                        if (sa.getValue().equals(respuesta) && respuesta.getValue() != "")
+                            fono.get(0).setValue(iAnswerData);
+                    }else {
+                        fono.get(0).setValue(iAnswerData);
+                    }
+                }
+            }
+            List<TreeElement> ruc;
+            ruc = localnuevosurti.getChildrenWithName("ruc");
+            if (ruc.size() == 1) {
+                StringData sa = (StringData) ruc.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_Cedula().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    if(!sa.getValue().equals(".") && !sa.getValue().equals("")) {
+                        if (sa.getValue().equals(respuesta) && respuesta.getValue() != "")
+                            ruc.get(0).setValue(iAnswerData);
+                    }else {
+                        ruc.get(0).setValue(iAnswerData);
+                    }
+                }
+            }
+            List<TreeElement> tipo_negocioentrega;
+            tipo_negocioentrega = localnuevosurti.getChildrenWithName("tipo_negocioentrega");
+            if (tipo_negocioentrega.size() == 1) {
+                StringData sa = (StringData) tipo_negocioentrega.get(0).getValue();
+                if (sa != null) {
+                    StringData respuesta = new StringData();
+                    respuesta.setValue(objBranchSessioot.getE_TypeBusiness().replace("-", "\n"));
+                    IAnswerData iAnswerData = (IAnswerData) respuesta;
+                    if(!sa.getValue().equals(".") && !sa.getValue().equals("")) {
+                        if (sa.getValue().equals(respuesta) && respuesta.getValue() != "")
+                            tipo_negocioentrega.get(0).setValue(iAnswerData);
+                    }else {
+                        tipo_negocioentrega.get(0).setValue(iAnswerData);
+                    }
+                }
+            }
+        }
+
+        /*grupo de local y propietario*/
+        /*Store audit*/
+
         TreeElement propietario = findDepthFirst(trueSubmissionElement, "datos_propietario");
         TreeElement cedula = findDepthFirst(trueSubmissionElement, "DI");
-        BranchSession objBranchSessioot=new BranchSession();
+        TreeElement ptindice= findDepthFirst(trueSubmissionElement, "TN");
+        String numeracioncasa="";
+
+
+        TreeElement local = findDepthFirst(trueSubmissionElement, "DL_CO");
+        TreeElement localnuevo = findDepthFirst(trueSubmissionElement, "IMG");
+
+
+        /*parametro surti*/
+        if (ptindice != null) {
+            List<TreeElement> nombreindice;
+            nombreindice = ptindice.getChildrenWithName("compra");
+            if (nombreindice.size() == 1) {
+                SelectOneData sa = (SelectOneData) nombreindice.get(0).getValue();
+                if (sa != null) {
+
+
+                    sa.getDisplayText().equals(objBranchSessioot.getE_name());
+                    surtiClient.setPtIndice(sa.getDisplayText());
+                }else {
+                    surtiClient.setPtIndice("");
+                }
+            }
+        }
+        surtiClient.setLatitud("0.0");
+        surtiClient.setLongitud("0.0");
+        TreeElement geo= findDepthFirst(trueSubmissionElement, "ruta");
+        if(geo!=null){
+            List<TreeElement> geoname;
+            geoname = geo.getChildrenWithName("geo");
+            if(geoname.size()==1) {
+                double[] op;
+                GeoPointData sa = (GeoPointData) geoname.get(0).getValue();
+                if(sa!=null){
+                    op = (double[]) sa.getValue();
+                    surtiClient.setLatitud(String.valueOf(op[0]));
+                    surtiClient.setLongitud(String.valueOf(op[1]));
+                }
+            }
+
+        }
+
+        TreeElement province= findDepthFirst(trueSubmissionElement, "province");
+        if(province!=null)
+        {
+            List<TreeElement> nombreprovincia;
+            nombreprovincia = province.getChildrenWithName("provincia");
+            if(nombreprovincia.size()==1){
+                SelectOneData sa = (SelectOneData) nombreprovincia.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setProvinceId(sa.getDisplayText());
+                }else {
+                    surtiClient.setProvinceId("");
+                }
+            }
+
+        }
+        if(localnuevosurti!=null)
+        {
+            List<TreeElement> nombrecanton;
+            nombrecanton = localnuevosurti.getChildrenWithName("canton");
+            if(nombrecanton.size()==1){
+                SelectOneData sa = (SelectOneData) nombrecanton.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setCity(sa.getDisplayText());
+                }else {
+                    surtiClient.setCity("");
+                }
+            }
+
+        }
+        if(localnuevosurti!=null) {
+            //ruc
+            List<TreeElement> ruc;
+            ruc = localnuevosurti.getChildrenWithName("ruc");
+            if (ruc.size() == 1) {
+                StringData sa = (StringData) ruc.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setRUC(sa.getDisplayText());
+                }
+            }
+        }
+
+        if(localnuevosurti!=null) {
+            //ruc
+            List<TreeElement> FirstName;
+            FirstName = localnuevosurti.getChildrenWithName("name_contacto");
+            if (FirstName.size() == 1) {
+                StringData sa = (StringData) FirstName.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setFirstName(sa.getDisplayText());
+                }
+            }
+        }
+        if(localnuevosurti!=null) {
+            //ruc
+            List<TreeElement> Email;
+            Email = localnuevosurti.getChildrenWithName("mail");
+            if (Email.size() == 1) {
+                StringData sa = (StringData) Email.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setEmail(sa.getDisplayText());
+                }
+            }
+        }
+        if(localnuevosurti!=null) {
+            //ruc
+            List<TreeElement> cel_phone;
+            cel_phone = localnuevosurti.getChildrenWithName("cel");
+            if (cel_phone.size() == 1) {
+                StringData sa = (StringData) cel_phone.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setPhoneNumber(sa.getDisplayText());
+                }
+            }
+        }
+        if(localnuevosurti!=null) {
+            //ruc
+            List<TreeElement> LastName;
+            LastName = localnuevosurti.getChildrenWithName("name_contacto");
+            if (LastName.size() == 1) {
+                StringData sa = (StringData) LastName.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setLastName(sa.getDisplayText());
+                }
+            }
+        }
+
+
+        if(localnuevosurti!=null) {
+            //ruc
+            List<TreeElement> numeracion;
+            numeracion = localnuevosurti.getChildrenWithName("numeracion");
+            if (numeracion.size() == 1) {
+                StringData sa = (StringData) numeracion.get(0).getValue();
+                if (sa != null) {
+                    numeracioncasa=sa.getDisplayText();
+                }
+            }
+        }
+        if(localnuevosurti!=null) {
+            //ruc
+            List<TreeElement> tipo_negocioentrega;
+            tipo_negocioentrega = localnuevosurti.getChildrenWithName("tipo_negocioentrega");
+            if (tipo_negocioentrega.size() == 1) {
+                StringData sa = (StringData) tipo_negocioentrega.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setBusinessName(sa.getDisplayText());
+                }
+            }
+        }
+        if(localnuevosurti!=null) {
+            //tipo de negocio
+            List<TreeElement> tiponegocio;
+            tiponegocio = localnuevosurti.getChildrenWithName("tipo_negocio");
+            if (tiponegocio.size() == 1) {
+                SelectOneData sa = (SelectOneData) tiponegocio.get(0).getValue();
+                if (sa != null) {
+                    surtiClient.setBusinessName(sa.getDisplayText());
+                } else {
+                    surtiClient.setBusinessName("");
+                }
+            }
+        }
+
+        //nombre local
+        List<TreeElement> nombrelocal;
+        nombrelocal = localnuevosurti.getChildrenWithName("local_nombre");
+        if (nombrelocal.size() == 1) {
+            StringData sa = (StringData) nombrelocal.get(0).getValue();
+            if (sa != null) {
+                surtiClient.setBusinessName(sa.getDisplayText());
+            }else {
+                surtiClient.setBusinessName("");
+            }
+        }
+
+        //calle principal
+        List<TreeElement> calle_principal;
+        calle_principal = localnuevosurti.getChildrenWithName("calle_principal");
+        if (calle_principal.size() == 1) {
+            StringData sa = (StringData) calle_principal.get(0).getValue();
+            if (sa != null) {
+                surtiClient.setAddress1(sa.getDisplayText()+ " " + numeracioncasa);
+            }else {
+                surtiClient.setAddress1("");
+            }
+        }
+
+        //referencia
+        List<TreeElement> referencia;
+        referencia = localnuevosurti.getChildrenWithName("referencia");
+        if (referencia.size() == 1) {
+            StringData sa = (StringData) referencia.get(0).getValue();
+            if (sa != null) {
+                surtiClient.setReferencia(sa.getDisplayText());
+            }else {
+                surtiClient.setReferencia("");
+            }
+        }
+
+
+
+
+
+
+        surtiClient.setEmail("");
+
+        surtiClient.setLastName("");
+
+
+
+        surtiClient.setProvinceId(objBranchSessioot.getE_provincia());
+        surtiClient.setCity(objBranchSessioot.getE_district());
+
+
+
+
         //inventario repeat para eliminar producto de la lista.
         if(rootElement.getInstanceName().contains(objBranchSessioot.getE_fvisibilidad())){
             if(localnuevo!=null){
@@ -1546,18 +1913,18 @@ public class FormController {
                 }
             }
 
-            List<TreeElement> nombrelocal;
+            List<TreeElement> nombrelocal2;
             List<TreeElement> direccion;
-            nombrelocal = e.getChildrenWithName("nota_local");
+            nombrelocal2 = e.getChildrenWithName("nota_local");
             direccion = e.getChildrenWithName("nota_direcc");
-            if ( nombrelocal.size() == 1 ) {
-                StringData sa = (StringData) nombrelocal.get(0).getValue();
+            if ( nombrelocal2.size() == 1 ) {
+                StringData sa = (StringData) nombrelocal2.get(0).getValue();
                 if (sa != null) {
                     if(objBranchSessioot.getE_name()!="") {
                         StringData respuesta = new StringData();
                         respuesta.setValue(objBranchSessioot.getE_name());
                         IAnswerData iAnswerData = (IAnswerData) respuesta;
-                        nombrelocal.get(0).setValue(iAnswerData);
+                        nombrelocal2.get(0).setValue(iAnswerData);
                     }
                 }
             }
@@ -1586,24 +1953,24 @@ public class FormController {
         }
 
         if(local!=null){
-            List<TreeElement> nombrelocal;
+            List<TreeElement> nombrelocal1;
             List<TreeElement> direccion;
-            List<TreeElement> referencia;
+            List<TreeElement> referencia1;
             List<TreeElement> TypeBusiness;
             List<TreeElement> telefono;
-            nombrelocal = local.getChildrenWithName("nota_local");
+            nombrelocal1 = local.getChildrenWithName("nota_local");
             direccion = local.getChildrenWithName("nota_direcc");
-            referencia = local.getChildrenWithName("nota_ref");
+            referencia1 = local.getChildrenWithName("nota_ref");
             TypeBusiness = local.getChildrenWithName("nota_tiponeg");
             telefono = local.getChildrenWithName("nota_telefono");
-            if ( nombrelocal.size() == 1 ) {
-                StringData sa = (StringData) nombrelocal.get(0).getValue();
+            if ( nombrelocal1.size() == 1 ) {
+                StringData sa = (StringData) nombrelocal1.get(0).getValue();
                 if (sa != null) {
                     if(objBranchSessioot.getE_name()!="") {
                         StringData respuesta = new StringData();
                         respuesta.setValue(objBranchSessioot.getE_name());
                         IAnswerData iAnswerData = (IAnswerData) respuesta;
-                        nombrelocal.get(0).setValue(iAnswerData);
+                        nombrelocal1.get(0).setValue(iAnswerData);
                     }
                 }
             }
@@ -1642,14 +2009,14 @@ public class FormController {
                     }
                 }
             }
-            if ( referencia.size() == 1 ) {
-                StringData sa = (StringData) referencia.get(0).getValue();
+            if ( referencia1.size() == 1 ) {
+                StringData sa = (StringData) referencia1.get(0).getValue();
                 if (sa != null) {
                     if(objBranchSessioot.getE_reference()!="") {
                         StringData respuesta = new StringData();
                         respuesta.setValue(objBranchSessioot.getE_reference());
                         IAnswerData iAnswerData = (IAnswerData) respuesta;
-                        referencia.get(0).setValue(iAnswerData);
+                        referencia1.get(0).setValue(iAnswerData);
                     }
                 }
             }
@@ -1674,13 +2041,13 @@ public class FormController {
             List<TreeElement> r;
             List<TreeElement> ch;
             List<TreeElement> notalocal;
-            List<TreeElement> tiponegocio;
+            List<TreeElement> tiponegocio1;
             List<TreeElement> note1;
             List<TreeElement> text1;
 
             List<TreeElement> calculate1;
             List<TreeElement> semana;
-            List<TreeElement> nombrelocal;
+            List<TreeElement> nombrelocal1;
 
             note1=e.getChildrenWithName("actividades");
             text1=e.getChildrenWithName("text1");
@@ -1693,7 +2060,7 @@ public class FormController {
             ch = e.getChildrenWithName("existe");
 
             notalocal = e.getChildrenWithName("nota_local");
-            tiponegocio = e.getChildrenWithName("nota_tiponeg");
+            tiponegocio1 = e.getChildrenWithName("nota_tiponeg");
 
 
 
@@ -1794,8 +2161,8 @@ public class FormController {
                     }
                 }
             }
-            if ( tiponegocio.size() == 1 ) {
-                StringData  sa = (StringData) tiponegocio.get(0).getValue();
+            if ( tiponegocio1.size() == 1 ) {
+                StringData  sa = (StringData) tiponegocio1.get(0).getValue();
                 if ( sa != null ) {
 
 
@@ -1803,7 +2170,7 @@ public class FormController {
                         StringData respuesta = new StringData();
                         respuesta.setValue(objBranchSessioot.getE_TypeBusiness());
                         IAnswerData iAnswerData = (IAnswerData) respuesta;
-                        tiponegocio.get(0).setValue(iAnswerData);
+                        tiponegocio1.get(0).setValue(iAnswerData);
                         instanceId = "";
                     }
                 }

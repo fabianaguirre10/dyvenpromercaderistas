@@ -26,7 +26,7 @@ import static org.odk.collect.android.database.EstructuraBD.*;
 public class BaseDatosEngine {
     private static final String NOMBRE_BASE_DATOS = "EngineDatos.db";
 
-    private static final int VERSION_ACTUAL = 43;
+    private static final int VERSION_ACTUAL = 44;
     private DatabaseHelperEngine dbHelper;
     private SQLiteDatabase db;
     interface Tablas {
@@ -91,7 +91,9 @@ public class BaseDatosEngine {
                         ColumnasEngine.FExtra_visibilidad + " text," +
                         ColumnasEngine.FInventarios + " text," +
                         ColumnasEngine.FPosicionamiento + " text," +
-                        ColumnasEngine.Facciontipolocal  + " text" +
+                        ColumnasEngine.Facciontipolocal + " text," +
+                        ColumnasEngine.provincia + " text," +
+                        ColumnasEngine.district + " text" +
 
 
 
@@ -201,7 +203,7 @@ public class BaseDatosEngine {
             db.execSQL("DROP TABLE IF EXISTS " + Tablas.Productos);
             db.execSQL("DROP TABLE IF EXISTS " + Tablas.Operacion);
             onCreate(db);
-            if(newVersion==43){
+            if(newVersion==44){
                 onCreate(db);
             }
         }
@@ -792,7 +794,9 @@ public Cursor ResumenDatos(String consulta) {
                         + "'" + values.getAsString(ColumnasEngine.FExtra_visibilidad) + "',"
                         + "'" + values.getAsString(ColumnasEngine.FInventarios) + "',"
                         + "'" + values.getAsString(ColumnasEngine.FPosicionamiento) + "',"
-                        + "'" + values.getAsString(ColumnasEngine.Facciontipolocal) + "')";
+                        + "'" + values.getAsString(ColumnasEngine.Facciontipolocal) + "',"
+                        + "'" + values.getAsString(ColumnasEngine.provincia) + "',"
+                        + "'" + values.getAsString(ColumnasEngine.district) + "')";
                 db.execSQL(query);
 
                 //CerrarBase(db);

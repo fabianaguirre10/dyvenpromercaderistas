@@ -603,6 +603,10 @@ public class configuraciogeneral extends AppCompatActivity {
                             String cedula=obj.getString("cedula");
                             String actividad=obj.getString("actividad").replace("[","").replace("]","");
                             String Link=obj.getString("link");
+
+                            String province=obj.getString("province");
+                            String district=obj.getString("district");
+
                             String[] actividades = actividad.split(",");
                             String actividadesformularios="";
 
@@ -684,7 +688,8 @@ public class configuraciogeneral extends AppCompatActivity {
                                 Objdatos.put(EstructuraBD.CabecerasEngine.FInventarios,"I");
                                 Objdatos.put(EstructuraBD.CabecerasEngine.FPosicionamiento,"I");
                                 Objdatos.put(EstructuraBD.CabecerasEngine.Facciontipolocal,"");
-
+                                Objdatos.put(EstructuraBD.CabecerasEngine.provincia,province);
+                                Objdatos.put(EstructuraBD.CabecerasEngine.district,district);
                                 usdbh.insertardatos(Objdatos);
                                 usdbh.close();
                             } catch (Exception e) {

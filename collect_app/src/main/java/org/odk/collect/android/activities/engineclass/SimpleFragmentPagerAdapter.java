@@ -28,14 +28,13 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
         objutil= new Engine_util();
         String where = "where 1=1 ";
         where = "where 1=1    ";
-        where = where + " and ESTADOAGGREGATE NOT IN('E','N') and rutaaggregate ='" + ruta + "' ";
+        where = where + " and  uriformulario = '' and rutaaggregate ='" + ruta + "' ";
         Cursor cursorActivos = objutil.ContarEstado(where);
 
         where = "where 1=1  ";
-        where = where + " and  rutaaggregate ='" + ruta + "'  ";
         /*comentar cambio app dyvenpro*/
         Cursor cursorFinalizados=null;
-        where = where + "  and FVisibilidad='ok' and FDisponibilidad='ok' and FAccesibilidad='ok' and FExtravisibilidad='ok' and FInventarios='ok' and FPosicionamiento='ok'  and rutaaggregate ='" + ruta + "'  ";
+        where = where + "  and  uriformulario <> '' and rutaaggregate ='" + ruta + "'  ";
         cursorFinalizados = objutil.ContarEstado(where);
 
 
@@ -68,10 +67,10 @@ if(cursorFinalizados!=null) {
             Fragment activo =new Activos();
             activo.setArguments(args);
             return activo;
-        /*} else if (position==1){
+        } else if (position==1){
             Fragment finalizados =new Finalizados();
             finalizados.setArguments(args);
-            return finalizados;*/
+            return finalizados;
         }else
         {
             Fragment mapa =new mapa();
@@ -82,7 +81,7 @@ if(cursorFinalizados!=null) {
     // This determines the number of tabs
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     // This determines the title for each tab
@@ -91,12 +90,12 @@ if(cursorFinalizados!=null) {
         // Generate title based on item position
         switch (position) {
             case 0:
-                int a=activosE-finalizadosE;
+                int a=activosE;
                 return "Pendientes("+ a +")";
-            /*case 1:
-                return "Finalizados("+ finalizadosE+")";*/
             case 1:
-                int b=activosE-finalizadosE;
+                return "Finalizados("+ finalizadosE+")";
+            case 2:
+                int b=activosE;
                 return "Ubicación("+b+")";
 
             default:

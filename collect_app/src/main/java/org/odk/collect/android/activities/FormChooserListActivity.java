@@ -121,69 +121,11 @@ public class FormChooserListActivity extends FormListActivity implements
         boolean resultadop=true;
 
             super.onBackPressed();
-            /*validar que los formularios esten terminados tanto en actividades y medición*/
-
-            BranchSession objBranchSeccion= new BranchSession();
-            if((objBranchSeccion.getE_EstadoFormulario().equals("cerrado")||objBranchSeccion.getE_EstadoFormulario().equals("no_celular")||objBranchSeccion.getE_EstadoFormulario().equals("no_existe")) &&   objBranchSeccion.getFVisibilidadestado().equals("ok")){
-                resultadop=true;
-            }else if (!objBranchSeccion.getFVisibilidadestado().equals("ok") && !objBranchSeccion.getE_EstadoFormulario().equals("cerrado") ) {
-                resultadop = false;
-            }else if(!objBranchSeccion.getFDisponibilidadestado().equals("ok")) {
-                resultadop=false;
-            }else if(!objBranchSeccion.getFAccesibilidadestado().equals("ok") ) {
-                resultadop=false;
-            }else if(!objBranchSeccion.getFExtra_visibilidadestado().equals("ok")) {
-                resultadop=false;
-            }else if(!objBranchSeccion.getFInventariosestado().equals("ok")) {
-                resultadop=false;
-            }else if (!objBranchSeccion.getFPosicionamientoestado().equals("ok")) {
-                resultadop=false;
-            } else  if(!objBranchSeccion.getFVisibilidadestado().equals("ok")) {
-                resultadop=false;
-           }
-            if(!objBranchSeccion.getFVisibilidadestado().equals("ok")&&!objBranchSeccion.getFDisponibilidadestado().equals("ok")&&!objBranchSeccion.getFAccesibilidadestado().equals("ok")&&!objBranchSeccion.getFInventariosestado().equals("ok")
-                && !objBranchSeccion.getFPosicionamientoestado().equals("ok"))
-            {
-                resultadop=true;
-            }
-            if(resultadop==true) {
-                objBranchSeccion.setE_ID("");
-                objBranchSeccion.setE_idbranch("");
-                objBranchSeccion.setE_idAccount("");
-                objBranchSeccion.setE_externalCode("");
-                objBranchSeccion.setE_code("");
-                objBranchSeccion.setE_neighborhood("");
-                objBranchSeccion.setE_mainStreet("");
-                objBranchSeccion.setE_reference("");
-                objBranchSeccion.setE_propietario("");
-                objBranchSeccion.setE_uriformulario("");
-                objBranchSeccion.setE_idprovince("");
-                objBranchSeccion.setE_iddistrict("");
-                objBranchSeccion.setE_idParish("");
-                objBranchSeccion.setE_rutaaggregate("0");
-                objBranchSeccion.setE_imeI_ID("");
-                objBranchSeccion.setE_TypeBusiness("");
-                objBranchSeccion.setE_nuevo("");
-                objBranchSeccion.setE_name("");
-                objBranchSeccion.setE_festadomedicion("");
-                objBranchSeccion.setE_festadopercha("");
-                objBranchSeccion.setE_festadopop("");
-                objBranchSeccion.setE_festadopromocion("");
-                objBranchSeccion.setE_actividades("");
-                objBranchSeccion.setE_festadoactividades("");
-                objBranchSeccion.setE_ESTADOAGGREGATE("");
 
                 startActivity(new Intent(this, principal.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 finish();
                 return;
-            }else {
-                Toast.makeText(this, "Completar todos los modulos para regresar a la ruta..!!!.", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, FormChooserListActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                finish();
-                return;
-            }
 
     }
     @Override
@@ -201,58 +143,6 @@ public class FormChooserListActivity extends FormListActivity implements
             // get uri to form
             long idFormsTable = listView.getAdapter().getItemId(position);
             Uri formUri = ContentUris.withAppendedId(FormsColumns.CONTENT_URI, idFormsTable);
-
-            String nombre= ((CrossProcessCursorWrapper) parent.getItemAtPosition(position)).getString((((CrossProcessCursorWrapper) parent.getItemAtPosition(position)).getColumnIndex("displayName")));
-            BranchSession objFormularios= new BranchSession();
-            if(nombre.contains(objFormularios.getE_fvisibilidad())  && objFormularios.getFVisibilidadestado().equals("ok") ){
-                Toast.makeText(this, "Tarea ya realizada por cliente", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if(nombre.contains(objFormularios.getE_fdisponibilidad()) && objFormularios.getFDisponibilidadestado().equals("ok") ){
-                Toast.makeText(this, "Tarea ya realizada por cliente", Toast.LENGTH_SHORT).show();
-                return;
-            }else{
-                if( !objFormularios.getFVisibilidadestado().equals("ok") && !nombre.contains(objFormularios.getE_fvisibilidad())){
-                    Toast.makeText(this, "Debe realizar el formulario de Visibilidad antes de ejecutar este modulo..!!!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-            if(nombre.contains(objFormularios.getE_faccesibilidad()) && objFormularios.getFAccesibilidadestado().equals("ok") ){
-                Toast.makeText(this, "Tarea ya realizada por cliente", Toast.LENGTH_SHORT).show();
-                return;
-            }else{
-                if( !objFormularios.getFVisibilidadestado().equals("ok") && !nombre.contains(objFormularios.getE_fvisibilidad())){
-                    Toast.makeText(this, "Debe realizar el formulario de Visibilidad antes de ejecutar este modulo..!!!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-            if(nombre.contains(objFormularios.getE_fextra_visibilidad()) && objFormularios.getFExtra_visibilidadestado().equals("ok") ){
-                Toast.makeText(this, "Tarea ya realizada por cliente", Toast.LENGTH_SHORT).show();
-                return;
-            }else{
-                if( !objFormularios.getFVisibilidadestado().equals("ok") && !nombre.contains(objFormularios.getE_fvisibilidad())){
-                    Toast.makeText(this, "Debe realizar el formulario de Visibilidad antes de ejecutar este modulo..!!!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-            if(nombre.contains(objFormularios.getE_finventarios()) && objFormularios.getFInventariosestado().equals("ok") ){
-                Toast.makeText(this, "Tarea ya realizada por cliente", Toast.LENGTH_SHORT).show();
-                return;
-            }else{
-                if( !objFormularios.getFVisibilidadestado().equals("ok") && !nombre.contains(objFormularios.getE_fvisibilidad())){
-                    Toast.makeText(this, "Debe realizar el formulario de Visibilidad antes de ejecutar este modulo..!!!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-            if(nombre.contains(objFormularios.getE_fposicionamiento()) && objFormularios.getFPosicionamientoestado().equals("ok") ){
-                Toast.makeText(this, "Tarea ya realizada por cliente", Toast.LENGTH_SHORT).show();
-                return;
-            }else{
-                if( !objFormularios.getFVisibilidadestado().equals("ok") && !nombre.contains(objFormularios.getE_fvisibilidad())){
-                    Toast.makeText(this, "Debe realizar el formulario de Visibilidad antes de ejecutar este modulo..!!!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
 
             String action = getIntent().getAction();
             if (Intent.ACTION_PICK.equals(action)) {

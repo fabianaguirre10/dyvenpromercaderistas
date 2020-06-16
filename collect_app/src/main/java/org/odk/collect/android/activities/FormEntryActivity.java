@@ -93,6 +93,7 @@ import org.odk.collect.android.dao.helpers.InstancesDaoHelper;
 import org.odk.collect.android.database.BaseDatosEngine;
 import org.odk.collect.android.database.Entidades.BranchSession;
 import org.odk.collect.android.database.Entidades.CodigoSession;
+import org.odk.collect.android.database.Entidades.SurtiClient;
 import org.odk.collect.android.database.EstructuraBD;
 import org.odk.collect.android.events.ReadPhoneStatePermissionRxEvent;
 import org.odk.collect.android.events.RxEventBus;
@@ -1484,7 +1485,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                 Objdatosnuevos.put(EstructuraBD.CabecerasCodigos.uri, uri);
                 String where = "codeunico='" + objB.getE_code() + "'";
                 usdbh.ActualizarTablaCodigos(Objdatosnuevos, where);
-                if (existebaseengine == false && existefisico == true) {
+                if (existebaseengine == true && existefisico == true) {
                     ContentValues Objdatosingreso = new ContentValues();
                     Objdatosingreso.put(EstructuraBD.CabecerasEngine.idbranch, "null");
                     Objdatosingreso.put(EstructuraBD.CabecerasEngine.idAccount, codse.getC_idAccount());
@@ -1501,11 +1502,16 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                     Objdatosingreso.put(EstructuraBD.CabecerasEngine.idParish, "");
                     Objdatosingreso.put(EstructuraBD.CabecerasEngine.rutaaggregate, objB.getE_rutaaggregate());
                     Objdatosingreso.put(EstructuraBD.CabecerasEngine.imeI_ID, objB.getE_imeI_ID());
-                    Objdatosingreso.put(EstructuraBD.CabecerasEngine.LatitudeBranch, "0");
-                    Objdatosingreso.put(EstructuraBD.CabecerasEngine.LenghtBranch, "0");
+                    Objdatosingreso.put(EstructuraBD.CabecerasEngine.LatitudeBranch, objB.getE_LatitudeBranch());
+                    Objdatosingreso.put(EstructuraBD.CabecerasEngine.LenghtBranch, objB.getE_LenghtBranch());
                     Objdatosingreso.put(EstructuraBD.CabecerasEngine.EstadoFormulario, objB.getE_EstadoFormulario());
                     Objdatosingreso.put(EstructuraBD.CabecerasEngine.Colabora, objB.getE_Colabora());
-                    usdbh.insertardatos(Objdatosingreso);
+                    String where2 = "code='" + objB.getE_code()
+                            + "'";
+                    if(objB.getE_EstadoFormulario().toString().equals("e_EstadoFormulario")==false) {
+                        usdbh.ActualizarTabla(Objdatosingreso, where2);
+                        usdbh.close();
+                    }
                 }
             } else {
 
@@ -1900,14 +1906,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                     case BUTTON_POSITIVE:
                         if (shouldExit) {
                             errorMessage = null;
-                            BranchSession obj= new
-                                    BranchSession();
-                            if(obj.getE_code()!="") {
-                                startActivity(new Intent(getApplication(), FormChooserListActivity.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                                finish();
-                            }else
-                                finish();
+
                         }
                         break;
                 }
@@ -1967,7 +1966,9 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
         BranchSession objFormularios= new BranchSession();
         String uri= Collect.getInstance().getFormController().getSubmissionMetadata().instanceId;
         String codigobranch=Collect.getInstance().getFormController().getSubmissionMetadata().instanceName;
-        BaseDatosEngine usdbh = new BaseDatosEngine();
+        BranchSession objBranchSessioot = new BranchSession();
+        SurtiClient surtiClient= new SurtiClient();
+
         switch (result.getState()) {
             case CHANGE_REASON_REQUIRED:
                 showIfNotShowing(ChangesReasonPromptDialogFragment.class, getSupportFragmentManager());
@@ -1987,129 +1988,55 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                     if (result.getRequest().shouldFinalize()) {
                         // Request auto-send if app-wide auto-send is enabled or the form that was just
                         // finalized specifies that it should always be auto-sent.
+                        cambiarestado(codigobranch, uri);
+                        if (surtiClient.getPtIndice().equals("si")) {
+                            Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.mardis.surtisales");
+                            if (launchIntent != null) {
+                                surtiClient.setPtIndice(codigobranch);
+                                launchIntent.putExtra("ptindice", surtiClient.getPtIndice());
+                                launchIntent.putExtra("Email", surtiClient.getEmail());
+                                launchIntent.putExtra("FirstName", surtiClient.getFirstName());
+                                launchIntent.putExtra("LastName", surtiClient.getLastName());
+                                launchIntent.putExtra("BusinessName", surtiClient.getBusinessName());
+                                launchIntent.putExtra("RUC", surtiClient.getRUC());
+                                launchIntent.putExtra("PhoneNumber", surtiClient.getPhoneNumber());
+                                launchIntent.putExtra("Referencia", surtiClient.getReferencia());
+                                launchIntent.putExtra("ProvinceId", surtiClient.getProvinceId());
+                                launchIntent.putExtra("City", surtiClient.getCity());
+                                launchIntent.putExtra("Address1", surtiClient.getAddress1() + " " + surtiClient.getReferencia());
+                                launchIntent.putExtra("Latitud", surtiClient.getLatitud());
+                                launchIntent.putExtra("Longitud", surtiClient.getLongitud());
+                                launchIntent.putExtra("uri", uri);
 
+                                startActivity(launchIntent);//null pointer check in case package name was not found
 
-                        if(objFormularios.getE_code()!="") {
-
-                            if (Collect.getInstance().getFormController().getFormTitle().contains(objFormularios.getE_fvisibilidad())) {
-                                objFormularios.setFVisibilidadestado("ok");
-
-                                usdbh = usdbh.open();
-                                ContentValues Objdatos = new ContentValues();
-                                Objdatos.put(EstructuraBD.CabecerasEngine.FVisibilidad, "ok");
-                                Objdatos.put(EstructuraBD.CabecerasEngine.EstadoFormulario, objFormularios.getE_EstadoFormulario());
-                                String where2 = "code='" + objFormularios.getE_code() + "'";
-                                usdbh.ActualizarTabla(Objdatos, where2);
-                                usdbh.close();
-                                startActivity(new Intent(this, FormChooserListActivity.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-
-
-                            }
-                            if (Collect.getInstance().getFormController().getFormTitle().contains(objFormularios.getE_fdisponibilidad())) {
-                                objFormularios.setFDisponibilidadestado("ok");
-
-                                usdbh = usdbh.open();
-                                ContentValues Objdatos = new ContentValues();
-                                Objdatos.put(EstructuraBD.CabecerasEngine.FDisponibilidad, "ok");
-                                Objdatos.put(EstructuraBD.CabecerasEngine.EstadoFormulario, objFormularios.getE_EstadoFormulario());
-                                String where2 = "code='" + objFormularios.getE_code() + "'";
-                                usdbh.ActualizarTabla(Objdatos, where2);
-                                cambiarestado(codigobranch,uri);
-                                usdbh.close();
-                                startActivity(new Intent(this, FormChooserListActivity.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-
-
-
-                            }
-                            if (Collect.getInstance().getFormController().getFormTitle().contains(objFormularios.getE_faccesibilidad())) {
-                                objFormularios.setFAccesibilidadestado("ok");
-
-                                usdbh = usdbh.open();
-                                ContentValues Objdatos = new ContentValues();
-                                Objdatos.put(EstructuraBD.CabecerasEngine.FAccesibilidad, "ok");
-                                String where2 = "code='" + objFormularios.getE_code() + "'";
-                                usdbh.ActualizarTabla(Objdatos, where2);
-                                usdbh.close();
-                                FormChooserListActivity frch= new FormChooserListActivity();
-                                frch.finish();
-                                startActivity(new Intent(this, FormChooserListActivity.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-
-                            }
-                            if (Collect.getInstance().getFormController().getFormTitle().contains(objFormularios.getE_fextra_visibilidad())) {
-                                objFormularios.setFExtra_visibilidadestado("ok");
-
-                                usdbh = usdbh.open();
-                                ContentValues Objdatos = new ContentValues();
-                                Objdatos.put(EstructuraBD.CabecerasEngine.FExtra_visibilidad, "ok");
-                                String where2 = "code='" + objFormularios.getE_code() + "'";
-                                usdbh.ActualizarTabla(Objdatos, where2);
-                                usdbh.close();
-                                FormChooserListActivity frch= new FormChooserListActivity();
-                                frch.finish();
-
-                                startActivity(new Intent(this, FormChooserListActivity.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-
-                            }
-                            if (Collect.getInstance().getFormController().getFormTitle().contains(objFormularios.getE_finventarios())) {
-                                objFormularios.setFInventariosestado("ok");
-
-                                usdbh = usdbh.open();
-                                ContentValues Objdatos = new ContentValues();
-                                Objdatos.put(EstructuraBD.CabecerasEngine.FInventarios, "ok");
-                                String where2 = "code='" + objFormularios.getE_code() + "'";
-                                usdbh.ActualizarTabla(Objdatos, where2);
-                                usdbh.close();
-                                FormChooserListActivity frch= new FormChooserListActivity();
-                                frch.finish();
-
-                                startActivity(new Intent(this, FormChooserListActivity.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-
-                            }
-                            if (Collect.getInstance().getFormController().getFormTitle().contains(objFormularios.getE_fposicionamiento())) {
-                                objFormularios.setFPosicionamientoestado("ok");
-                                usdbh = usdbh.open();
-                                ContentValues Objdatos = new ContentValues();
-                                Objdatos.put(EstructuraBD.CabecerasEngine.FPosicionamiento, "ok");
-                                String where2 = "code='" + objFormularios.getE_code() + "'";
-                                usdbh.ActualizarTabla(Objdatos, where2);
-                                usdbh.close();
-                                FormChooserListActivity frch= new FormChooserListActivity();
-                                frch.finish();
-
-                                startActivity(new Intent(this, FormChooserListActivity.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-
-                            }
-                            String formId = getFormController().getFormDef().getMainInstance().getRoot().getAttributeValue("", "id");
-                            if (AutoSendWorker.formShouldBeAutoSent(formId, GeneralSharedPreferences.isAutoSendEnabled())) {
-                                requestAutoSend();
+                                surtiClient.setEmail("");
+                                surtiClient.setFirstName("");
+                                surtiClient.setLastName("");
+                                surtiClient.setBusinessName("");
+                                surtiClient.setRUC("");
+                                surtiClient.setPhoneNumber("");
+                                surtiClient.setReferencia("");
+                                surtiClient.setProvinceId("");
+                                surtiClient.setCity("");
+                                surtiClient.setAddress1("");
+                                surtiClient.setLatitud("0.0");
+                                surtiClient.setLongitud("0.0");
+                                surtiClient.setPtIndice("");
                             }
 
-                        }else{
-                            cambiarestado(codigobranch,uri);
-                            startActivity(new Intent(this, principal.class)
-                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+
+                        } else {
+                            cambiarestado(codigobranch, uri);
+                            // Force writing of audit since we are exiting
+
 
                         }
 
 
-                    } else {
-                        cambiarestado(codigobranch,uri);
-                        // Force writing of audit since we are exiting
-
-                        startActivity(new Intent(this, FormChooserListActivity.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                     }
-
-
-
-                    finishAndReturnInstance();
                 }
+                finishAndReturnInstance();
                 formSaveViewModel.resumeFormEntry();
                 break;
 
@@ -2182,12 +2109,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                 FormController formController = getFormController();
                 if (formController != null) {
                     formController.getAuditEventLogger().logEvent(AuditEvent.AuditEventType.FORM_EXIT, true, System.currentTimeMillis());
-                    BranchSession obj= new
-                            BranchSession();
-                    if(obj.getE_code()!="") {
-                        startActivity(new Intent(getApplication(), FormChooserListActivity.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                    }
+
                 }
                 removeTempInstance();
                 MediaManager.INSTANCE.revertChanges();
